@@ -76,7 +76,8 @@ while True:
             jugadores_mayor_promedio(lista_jugadores,"porcentaje_tiros_libres")
 
         case "16":
-            print("Ha seleccionado la Opción 16")
+            porcentaje_tiros_campo_sin_menor = calcular_promedio_sin_menor(lista_jugadores,"promedio_puntos_por_partido")
+            imprimir_resultado(porcentaje_tiros_campo_sin_menor)
 
         case "17":
             print(maxima_cantidad_logros(lista_jugadores))
@@ -88,10 +89,8 @@ while True:
             cantidad_temporadas = calcular_mayor(lista_jugadores, "temporadas")
             imprimir_resultado(cantidad_temporadas)
 
-
-        case "20":
-            print("Ha seleccionado la Opción 20")
-
+        # case "20":
+        #     print("Ha seleccionado la Opción 20")
         case _:
             print("Opción inválida. Intente de nuevo.")
 

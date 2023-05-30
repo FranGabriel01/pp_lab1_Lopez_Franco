@@ -20,7 +20,7 @@ def leer_json(ruta:str):
         return lista_jugadores["jugadores"]
     
 
-lista_jugadores = leer_json(r"C:\Users\Juli\Desktop\Programacion 1\Parcial\dt.json")
+lista_jugadores = leer_json(r"pp_lab1_Lopez_Franco\dt.json")
 
 #1
 def mostrar_jugador(lista:list,dato:str):
@@ -67,7 +67,6 @@ def obtener_informacion_jugador(lista: list) -> list:
 
     return nombre_estadistica
 
-    
 #3
 def obtener_nombre_estadisticas(lista_jugadores: list[dict], indice)-> str:
     """
@@ -111,6 +110,11 @@ def guardar_csv(ruta:str,contenido):
 
 #4
 def buscar_jugador_por_nombre(lista:list) -> list:
+    '''
+    Esta función toma una lista de diccionarios que contienen información del jugador y un índice,
+    devuelve una cadena con el nombre del jugador y sus estadísticas separados por comas.
+     Si la lista de entrada está vacía, se devuelve una cadena vacía.
+    '''
     flag = True
     lista_jugadores = []
     nombre_ingresado = input("Ingrese el nomrbre de un jugador: ")
@@ -125,6 +129,11 @@ def buscar_jugador_por_nombre(lista:list) -> list:
     return lista_jugadores
     
 def imprimir_dato(lista:list,dato:str):
+    '''
+    Esta función toma una lista de diccionarios que contienen información del jugador y un índice,
+    devuelve una cadena con el nombre del jugador y sus estadísticas separados por comas.
+    Si la lista de entrada está vacía, se devuelve una cadena vacía.
+    '''
     for jugador in lista:
         print("\n",jugador["nombre"])
         for logro in jugador[dato]:
@@ -137,7 +146,6 @@ def calcular_promedio(lista:list,dato:str):
     Calcula el promedio de un dato en especifico
     retorna promedio con 2 decimales
     '''
-
     jugadores = len(lista)
     promedio = 0
     if len(lista) == 0:
@@ -153,7 +161,6 @@ def ordenar_palabra(lista:list,dato:str) -> list:
     ordena lista en forma ascendente
     retorna una lista ordenada
     '''
-
     lista_izq = []
     lista_der = []
     if len(lista) <= 1:
@@ -205,6 +212,29 @@ def calcular_mayor(lista: list, dato: str) -> list[str]:
 
     return lista_mayor
 
+def calcular_promedio_sin_menor(lista:list, dato:str) -> list[str]:
+    """
+    Esta función recorre una lista de jugadores y encuentra jugadores que tienen el menor valor en una estadística específica.
+    Recibe por parámetros una lista y un dato específico.
+    Retorna una lista de cadenas con los jugadores y los valores correspondientes.
+    """
+    menor = lista[0]["estadisticas"][dato]
+    lista_menor = []
+
+    for jugador in lista:
+        estadisticas = jugador["estadisticas"]
+        if dato in estadisticas:
+            valor_estadistica = estadisticas[dato]
+            if valor_estadistica < menor:
+                menor = valor_estadistica
+                lista_menor = ["{0}: {1}".format(jugador["nombre"],menor)]
+            elif valor_estadistica == menor:
+                lista_menor.append("{0}: {1}".format(jugador["nombre"],menor))
+
+    # Aca restamos el o los valores minimos al promedio
+    promedio = calcular_promedio(lista, dato) - menor
+
+    return lista_menor, promedio
 
 def jugadores_mayor_promedio(lista:list, data:str):
     '''
@@ -230,7 +260,8 @@ def jugadores_mayor_promedio(lista:list, data:str):
 
 def ingresar_promedio():
     '''
-    Esta función pide al usuario un promedio y lo devuelve.
+    Esta función pide al usuario un promedio.
+    Retorna un promedio en float.
     '''
     while True:
         promedio_ingresado = input("Ingrese un promedio: ")
@@ -266,9 +297,7 @@ def imprimir_resultado(resultado: list[str]):
             print(jugador_valor)
     else:
         print("No se encontraron jugadores con la estadística especificada.")
-
-
-
+        
 
 # Función para mostrar el menú
 def mostrar_menu():
@@ -288,9 +317,9 @@ def mostrar_menu():
     print("13. Mostrar el jugador con la mayor cantidad de robos totales")
     print("14. Mostrar el jugador con la mayor cantidad de bloqueos totales")
     print("15. Ingresar un valor y mostrar los jugadores que hayan tenido un porcentaje de tiros libres superior a ese valor.")
-    # print("16. Opción 16")
+    print("16. Mostrar el promedio de puntos por partido del equipo excluyendo al jugador con la menor cantidad de puntos por partido.")
     print("17. Mostrar al jugador con la mayor cantida de logros.")
     print("18. Ingresar un valor y mostrar los jugadores que hayan tenido un porcentaje de tiros triples superior a ese valor.")
     print("19. Mostrar el jugador con la mayor cantidad de temporadas jugadas")
     # print("20. Opción 20")
-    # print("0. Salir")
+    print("0. Salir")
